@@ -932,16 +932,22 @@ module.exports = g;
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./module/modal */ "./src/js/module/modal.js");
 
-Object(_module_modal__WEBPACK_IMPORTED_MODULE_0__["modalWindow"])( //popupEngineerButton
+Object(_module_modal__WEBPACK_IMPORTED_MODULE_0__["modalWindow"])( //buttonDesign
 {
   buttonOpenSelectorItem: ".button-design",
   modalSelectorItem: ".popup-design",
   buttonCloseSelectorItem: ".popup-close"
 });
-Object(_module_modal__WEBPACK_IMPORTED_MODULE_0__["modalWindow"])( //backCallButton
+Object(_module_modal__WEBPACK_IMPORTED_MODULE_0__["modalWindow"])( //consultation
 {
   buttonOpenSelectorItem: ".button-consultation",
   modalSelectorItem: ".popup-consultation",
+  buttonCloseSelectorItem: ".popup-close"
+});
+Object(_module_modal__WEBPACK_IMPORTED_MODULE_0__["modalWindow"])( //gift
+{
+  buttonOpenSelectorItem: ".fixed-gift",
+  modalSelectorItem: ".popup-gift",
   buttonCloseSelectorItem: ".popup-close"
 });
 Object(_module_modal__WEBPACK_IMPORTED_MODULE_0__["showModalByTime"])(".popup-consultation", 60000);
@@ -952,13 +958,13 @@ Object(_module_modal__WEBPACK_IMPORTED_MODULE_0__["showModalByTime"])(".popup-co
 /*!********************************!*\
   !*** ./src/js/module/modal.js ***!
   \********************************/
-/*! exports provided: showModalByTime, modalWindow */
+/*! exports provided: modalWindow, showModalByTime */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showModalByTime", function() { return showModalByTime; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "modalWindow", function() { return modalWindow; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showModalByTime", function() { return showModalByTime; });
 /* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
 /* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _service_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../service/service */ "./src/js/service/service.js");
@@ -966,30 +972,26 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function showModalByTime(selector, time) {
-  setTimeout(function () {
-    var flag;
-    document.querySelectorAll(["[data-modal]"]).forEach(function (item) {
-      if (getComputedStyle(item).display !== "none") {
-        flag = true;
-      }
-    });
-
-    if (!flag) {
-      document.querySelector(selector).style.display = "block";
-      document.body.style.overflow = "hidden";
-    }
-  }, time);
-}
+var flagСatchScroll = false;
 function modalWindow(_ref) {
   var buttonOpenSelectorItem = _ref.buttonOpenSelectorItem,
       modalSelectorItem = _ref.modalSelectorItem,
       buttonCloseSelectorItem = _ref.buttonCloseSelectorItem;
   var buttonsPopup = document.querySelectorAll(buttonOpenSelectorItem);
   var modalWindow = document.querySelector(modalSelectorItem);
-  buttonsPopup.forEach(function (elem) {
-    elem.addEventListener("click", function () {
-      Object(_service_service__WEBPACK_IMPORTED_MODULE_1__["openModal"])(modalWindow);
+  catchScroll(document.querySelector(".fixed-gift"));
+  buttonsPopup.forEach(function (btn) {
+    btn.addEventListener("click", function (event) {
+      flagСatchScroll = true;
+
+      if (event.target.classList.contains("fixed-gift")) {
+        event.target.style.display = "none";
+        modalWindow.classList.add("animated", "fadeIn");
+        Object(_service_service__WEBPACK_IMPORTED_MODULE_1__["openModal"])(modalWindow);
+      } else {
+        modalWindow.classList.add("animated", "fadeIn");
+        Object(_service_service__WEBPACK_IMPORTED_MODULE_1__["openModal"])(modalWindow);
+      }
     });
   });
   modalWindow.addEventListener("click", function (e) {
@@ -998,6 +1000,37 @@ function modalWindow(_ref) {
     }
   });
 } //modal
+
+function showModalByTime(selector, time) {
+  setTimeout(function () {
+    var flagModalByTime = false;
+    document.querySelectorAll(["[data-modal]"]).forEach(function (item) {
+      if (getComputedStyle(item).display !== "none") {
+        //срабатывает в момент окончания таймера
+        flagModalByTime = true;
+      }
+    });
+
+    if (!flagModalByTime) {
+      //срабатывает в момент окончания таймера
+      document.querySelector(selector).style.display = "block";
+      document.querySelector(selector).classList.add("animated", "fadeIn");
+      document.body.style.overflow = "hidden";
+      document.body.style.marginRight = "".concat(Object(_service_service__WEBPACK_IMPORTED_MODULE_1__["calcScroll"])(), "px");
+    }
+  }, time);
+}
+
+function catchScroll(element) {
+  window.addEventListener("scroll", function () {
+    var scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+
+    if (!flagСatchScroll && window.scrollY + document.documentElement.clientHeight >= scrollHeight - 1) {
+      flagСatchScroll = true;
+      element.click(); //ручной вызов события 
+    }
+  });
+}
 
 /***/ }),
 

@@ -1,6 +1,6 @@
 import {modalWindow, showModalByTime} from "./module/modal";
 
-modalWindow( //popupEngineerButton
+modalWindow( //buttonDesign
     {
         buttonOpenSelectorItem: ".button-design",
         modalSelectorItem: ".popup-design",
@@ -9,10 +9,18 @@ modalWindow( //popupEngineerButton
     }
 );
 
-modalWindow( //backCallButton
+modalWindow( //consultation
     {
         buttonOpenSelectorItem: ".button-consultation",
         modalSelectorItem: ".popup-consultation",
+        buttonCloseSelectorItem: ".popup-close",
+    }
+);
+
+modalWindow( //gift
+    {
+        buttonOpenSelectorItem: ".fixed-gift",
+        modalSelectorItem: ".popup-gift",
         buttonCloseSelectorItem: ".popup-close",
     }
 );
