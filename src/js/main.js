@@ -1,5 +1,5 @@
 import {modalWindow, showModalByTime} from "./module/modal";
-
+import {slider} from "./module/slider";
 modalWindow( //buttonDesign
     {
         buttonOpenSelectorItem: ".button-design",
@@ -26,3 +26,28 @@ modalWindow( //gift
 );
 
 showModalByTime(".popup-consultation", 60000);
+
+//slider(".main-slider > div > img", "vertical");    variants from class with .classes
+//slider(".feedback-slider-item", "", ".main-prev-btn", ".main-next-btn");
+
+slider({
+    parentWrapper: ".main-slider",
+    wrapper: ".main-slider-wrapper",
+    slides: ".main-slider-wrapper > div > img",
+    sizeItem: "height",
+    size: "669px",
+    flexDir: "column",
+    directions: "vertical"
+});
+
+slider({
+    parentWrapper: ".feedback-slider",
+    wrapper: ".feedback-wrapper",
+    slides: ".feedback-wrapper > div",
+    sizeItem: "width",
+    size: `1141px`,
+    flexDir: "row",
+    directions: "horizontal",
+    prev: ".main-prev-btn",
+    next: ".main-next-btn",
+});
