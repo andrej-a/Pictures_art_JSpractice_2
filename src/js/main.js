@@ -1,5 +1,6 @@
 import {modalWindow, showModalByTime} from "./module/modal";
 import {slider} from "./module/slider";
+import {forms} from "./module/form";
 modalWindow( //buttonDesign
     {
         buttonOpenSelectorItem: ".button-design",
@@ -51,3 +52,5 @@ slider({
     prev: ".main-prev-btn",
     next: ".main-next-btn",
 });
+
+forms();

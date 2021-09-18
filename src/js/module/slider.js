@@ -82,10 +82,8 @@ const slidersArray = document.querySelectorAll(slides); //just elements like img
 
 slidersArray.forEach(img => {
     img.style[sizeItem] = size; //sizeItem === height or width
-    console.log(img);
 }); //do all of them same size
 const parametres = +(slidersArray[0].style[sizeItem]).replace(/\D/gi, ""); //get width or height from slides elements
-console.log(parametres);
 parent.style[sizeItem] = `${parametres}px`;//set height or width of the parent 
 
 let offset = 0;
