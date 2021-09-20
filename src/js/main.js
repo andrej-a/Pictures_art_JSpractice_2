@@ -1,6 +1,7 @@
 import {modalWindow, showModalByTime} from "./module/modal";
 import {slider} from "./module/slider";
 import {forms} from "./module/form";
+import {mask} from "./module/mask";
 modalWindow( //buttonDesign
     {
         buttonOpenSelectorItem: ".button-design",
@@ -54,3 +55,5 @@ slider({
 });
 
 forms();
+
+mask("[name='phone']");

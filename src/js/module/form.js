@@ -58,8 +58,13 @@ function postDate(form) {
         `;
 
         form.style.display = "none";
+        
+        try {
+            uploadName[count].innerText = "Файл не выбран";
+        } catch(e) {
 
-        uploadName[count].innerText = "Файл не выбран";
+        }
+        
             
         let statusIMG = document.createElement("img");
         statusIMG.setAttribute("src", statusMessage.waitingGif);
@@ -111,8 +116,8 @@ function checkLanguages(array) {
     array.forEach(input => {
         input.addEventListener("input", event => {
             if (event.target.name === "name" || event.target.name === "message") {
-                if (/[^а-я]/gi.test(event.target.value)) {
-                    event.target.value = event.target.value.replace(/[^а-я]/gi, "");
+                if (/[^а-яё 0-9]/gi.test(event.target.value)) {
+                    event.target.value = event.target.value.replace(/[^а-яё 0-9]/gi, "");
                     event.target.style.border = "1px solid red";
                     message.innerText = "Вы можете ввести эти данные только на русском языке";
                     event.target.parentElement.appendChild(message);
