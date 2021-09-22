@@ -28,7 +28,7 @@ export function openModal(element) {
     element.style.display = "block";
 }
 
-export const postDataFormToServer = async function(url, targetBody, message, value) {
+/*export const postDataFormToServer = async function(url, targetBody, message, value) {
     message.innerText = value;
     const result = await fetch(url, {
         method: "POST",
@@ -36,4 +36,25 @@ export const postDataFormToServer = async function(url, targetBody, message, val
     });
 
     return await result.text();
+};*/
+
+export const postDataFormToServer = async function (url, target) {
+
+    const result = await fetch(url, {
+        method: "POST",
+        body: target
+    });
+
+    return await result;
+};
+
+export const getElements = async function (url) {
+
+    const result = await fetch(url);
+
+    if (!result.ok) {
+        throw new Error("Что-то сломалось. Пожалуйста, попробуйте снова.");
+    }
+
+    return await result.json();
 };

@@ -1,5 +1,5 @@
 "use strict";
-import {closeModal} from "../service/service";
+import {closeModal, postDataFormToServer} from "../service/service";
 export function forms() {
 const statusMessage = {
     waitingGif: "assets/img/spinner.gif",
@@ -102,15 +102,6 @@ function postDate(form) {
     });
 }
 
-const postDataFormToServer = async function (url, target) {
-
-    const result = await fetch(url, {
-        method: "POST",
-        body: target
-    });
-
-    return await result;
-};
 
 function checkLanguages(array) {
     array.forEach(input => {

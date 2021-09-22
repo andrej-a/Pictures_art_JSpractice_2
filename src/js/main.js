@@ -2,6 +2,10 @@ import {modalWindow, showModalByTime} from "./module/modal";
 import {slider} from "./module/slider";
 import {forms} from "./module/form";
 import {mask} from "./module/mask";
+import {easyGetElements} from "./module/easyGetElements";
+import {getElementsFromServer} from "./module/server";
+import {calculate} from "./module/calculate";
+
 modalWindow( //buttonDesign
     {
         buttonOpenSelectorItem: ".button-design",
@@ -27,7 +31,7 @@ modalWindow( //gift
     }
 );
 
-showModalByTime(".popup-consultation", 60000);
+//showModalByTime(".popup-consultation", 60000);
 
 //slider(".main-slider > div > img", "vertical");    variants from class with .classes
 //slider(".feedback-slider-item", "", ".main-prev-btn", ".main-next-btn");
@@ -57,3 +61,9 @@ slider({
 forms();
 
 mask("[name='phone']");
+
+//easyGetElements(".button-styles", ".hidden-lg");
+
+getElementsFromServer(".button-styles", ".styles .container .row");
+
+calculate();

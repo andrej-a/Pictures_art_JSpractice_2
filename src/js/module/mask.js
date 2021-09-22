@@ -27,7 +27,7 @@ export function mask(selector) {
     }
 
     function createMask(event) {
-        let matrix = "+375 (__) ___ __ __";//создаем матрицу. можно из БД или сервера
+        let matrix = "+7 (__) ___ __ __";//создаем матрицу. можно из БД или сервера
         let i = 0; //счетчик
         let def = matrix.replace(/\D/g, ""); 
         let value = this.value.replace(/\D/g, "");//работает на основе ввода пользователя
