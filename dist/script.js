@@ -4249,24 +4249,83 @@ Object(_module_calculate__WEBPACK_IMPORTED_MODULE_6__["calculate"])();
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "calculate", function() { return calculate; });
-/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
-/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.array.concat */ "./node_modules/core-js/modules/es.array.concat.js");
+/* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1__);
+
 
 
 
 function calculate() {
   var order = {
-    "Размер картины": "",
-    "Материал картины": "",
+    "Размер картины": "Выберите размер картины",
+    "Материал картины": "Выберите материал картины",
     "Дополнительные услуги": "",
-    "Стоимость": ""
+    "Стоимость": 0
   };
   var form = document.querySelector(".calc form");
   var selects = form.querySelectorAll("select");
   var orderBox = form.querySelector(".calc-price");
-  selects.forEach(function (select) {
-    select.addEventListener("change", createOrder);
+  var saleInput = form.querySelector(".promocode");
+  var flag = false;
+  var sizeCost = 0,
+      materialCost = 0,
+      optionsCost = 0;
+  saleInput.addEventListener("change", function () {
+    if (saleInput.value === "IWANTPOPART" && flag) {
+      orderBox.innerHTML = "\n                \"\u0420\u0430\u0437\u043C\u0435\u0440 \u043A\u0430\u0440\u0442\u0438\u043D\u044B\": ".concat(order["Размер картины"], "<br />\n                \"\u041C\u0430\u0442\u0435\u0440\u0438\u0430\u043B \u043A\u0430\u0440\u0442\u0438\u043D\u044B\": ").concat(order["Материал картины"], "<br />\n                \"\u0414\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0443\u0441\u043B\u0443\u0433\u0438\": ").concat(order["Дополнительные услуги"], "<br />\n                \"\u0421\u0442\u043E\u0438\u043C\u043E\u0441\u0442\u044C\": ").concat(order["Стоимость"] = sizeCost + materialCost + optionsCost - (sizeCost + materialCost + optionsCost) / 100 * 30, "<br />\n                \"\u0421\u043A\u0438\u0434\u043A\u0430\": ").concat(order["Скидка"] = true, "\n                ");
+      console.log(order);
+    }
   });
+  selects.forEach(function (select) {
+    select.addEventListener("change", function (even) {
+      switch (even.target.getAttribute("id")) {
+        case "size":
+          order["Размер картины"] = even.target.options[even.target.selectedIndex].value;
+          sizeCost = +even.target.options[even.target.selectedIndex].dataset.price;
+          checkFlag();
+          break;
+
+        case "material":
+          order["Материал картины"] = even.target.options[even.target.selectedIndex].value;
+          materialCost = +even.target.options[even.target.selectedIndex].dataset.price;
+          checkFlag();
+          break;
+
+        case "options":
+          order["Дополнительные услуги"] = even.target.options[even.target.selectedIndex].value;
+          optionsCost = +even.target.options[even.target.selectedIndex].dataset.price;
+          break;
+      }
+
+      checkSale();
+
+      if (flag) {
+        orderBox.innerHTML = "\n                \"\u0420\u0430\u0437\u043C\u0435\u0440 \u043A\u0430\u0440\u0442\u0438\u043D\u044B\": ".concat(order["Размер картины"], "<br />\n                \"\u041C\u0430\u0442\u0435\u0440\u0438\u0430\u043B \u043A\u0430\u0440\u0442\u0438\u043D\u044B\": ").concat(order["Материал картины"], "<br />\n                \"\u0414\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0443\u0441\u043B\u0443\u0433\u0438\": ").concat(order["Дополнительные услуги"], "<br />\n                \"\u0421\u0442\u043E\u0438\u043C\u043E\u0441\u0442\u044C\": ").concat(order["Стоимость"], "\n                ");
+      } else {
+        orderBox.innerHTML = "Для расчета нужно выбрать размер картины и материал картины";
+      }
+    });
+  });
+
+  function checkFlag() {
+    if (order["Размер картины"] !== "Выберите размер картины" && order["Материал картины"] !== "Выберите материал картины") {
+      flag = true;
+    } else {
+      flag = false;
+    }
+  }
+
+  function checkSale() {
+    if (saleInput.value === "IWANTPOPART") {
+      order["Стоимость"] = sizeCost + materialCost + optionsCost - (sizeCost + materialCost + optionsCost) / 100 * 30;
+    } else {
+      order["Стоимость"] = sizeCost + materialCost + optionsCost;
+    }
+
+    console.log(order);
+  }
 } //calculate
 
 /***/ }),
