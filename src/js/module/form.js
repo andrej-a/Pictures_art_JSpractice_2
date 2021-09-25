@@ -1,5 +1,6 @@
 "use strict";
 import {closeModal, postDataFormToServer} from "../service/service";
+export let flagInput = false;   //check upload.files.length
 export function forms() {
 const statusMessage = {
     waitingGif: "assets/img/spinner.gif",
@@ -35,6 +36,7 @@ checkLanguages(comments);
 upload.forEach((item, i) => {
     item.addEventListener("input", () => {
         count = i;
+        flagInput = true;
         if (item.files[0].name.length > 7) {
             item.previousElementSibling.innerText = `${item.files[0].name.slice(0, 7)}... ${item.files[0].type.replace(/.+\//gi, "\.")}`;
         } else {
@@ -58,49 +60,59 @@ function postDate(form) {
         `;
 
         form.style.display = "none";
-        
+
         try {
             uploadName[count].innerText = "Файл не выбран";
-        } catch(e) {
+        } catch (e) {
 
         }
-        
-            
-        let statusIMG = document.createElement("img");
-        statusIMG.setAttribute("src", statusMessage.waitingGif);
-        message.innerText = statusMessage.waiting;
-        message.appendChild(statusIMG);
-
-        const formData = new FormData(form);
 
         let api;
         form.closest(".popup-design") || form.classList.contains("set-picture") ? api = path.designer : api = path.question;
-        
-        postDataFormToServer(api, formData)
-            .then(result => result.text())
-            .then(result => {
-                console.log(result);
-                statusIMG.setAttribute("src", statusMessage.donePNG);
-                message.innerText = statusMessage.done;
-            })
-            .catch((e) => {
-                statusIMG.setAttribute("src", statusMessage.errorPNG);
-                message.innerText = statusMessage.error;
-            })
-            .finally(() => {
+
+            if (api === path.designer && !flagInput) {
+                message.innerText = "Пожалуйста, загрузите файл для картины.";
+
                 setTimeout(() => {
                     message.remove();
                     form.style.display = "";
-                    form.reset();
-                    if (form.classList.contains("toclose") && form.classList.contains("design")) {
-                        closeModal(document.querySelector(".popup-design"));
-                    } else if (form.classList.contains("toclose") && form.classList.contains("question")) {
-                        closeModal(document.querySelector(".popup-consultation"));
-                    }
                 }, 3000);
-            });
+
+            } else {
+                let statusIMG = document.createElement("img");
+                statusIMG.setAttribute("src", statusMessage.waitingGif);
+                message.innerText = statusMessage.waiting;
+                message.appendChild(statusIMG);
+
+                const formData = new FormData(form);
+
+                postDataFormToServer(api, formData)
+                    .then(result => result.text())
+                    .then(result => {
+                        console.log(result);
+                        statusIMG.setAttribute("src", statusMessage.donePNG);
+                        message.innerText = statusMessage.done;
+                    })
+                    .catch((e) => {
+                        statusIMG.setAttribute("src", statusMessage.errorPNG);
+                        message.innerText = statusMessage.error;
+                    })
+                    .finally(() => {
+                        setTimeout(() => {
+                            flagInput = false;
+                            message.remove();
+                            form.style.display = "";
+                            form.reset();
+                            if (form.classList.contains("toclose") && form.classList.contains("design")) {
+                                closeModal(document.querySelector(".popup-design"));
+                            } else if (form.classList.contains("toclose") && form.classList.contains("question")) {
+                                closeModal(document.querySelector(".popup-consultation"));
+                            }
+                        }, 3000);
+                    }); //finally
+            } // else
     });
-}
+    }
 
 
 function checkLanguages(array) {

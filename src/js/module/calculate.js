@@ -1,19 +1,21 @@
 "use strict";
-
+import {postDataFormToServerJSON} from "../service/service";
+import {flagInput} from "./form";//checkPicture InImput
 export function calculate() {
-    const order = {
+    let order = {
         "Размер картины": "Выберите размер картины",
         "Материал картины": "Выберите материал картины",
         "Дополнительные услуги": "",
         "Стоимость" : 0,
+        "Скидка": false,
     };
-
     const form = document.querySelector(".calc form");
     const selects = form.querySelectorAll("select");
-    const orderBox = form.querySelector(".calc-price");
-    const saleInput = form.querySelector(".promocode");
+    const orderBox = form.querySelector(".calc-price");//div for information
+    const saleInput = form.querySelector(".promocode");//input for promocode
     
-    let flag = false;
+    let flag = false;//check two select
+
     let sizeCost = 0,
     materialCost = 0,
     optionsCost = 0;
@@ -21,11 +23,8 @@ export function calculate() {
     saleInput.addEventListener("change", () => {
         if (saleInput.value === "IWANTPOPART" && flag) {
             orderBox.innerHTML = `
-                "Размер картины": ${order["Размер картины"]}<br />
-                "Материал картины": ${order["Материал картины"]}<br />
-                "Дополнительные услуги": ${order["Дополнительные услуги"]}<br />
-                "Стоимость": ${order["Стоимость"] = (sizeCost + materialCost + optionsCost) -( (sizeCost + materialCost + optionsCost)  / 100 * 30)}<br />
-                "Скидка": ${order["Скидка"] = true}
+                Стоимость: ${order["Стоимость"] = (sizeCost + materialCost + optionsCost) -( (sizeCost + materialCost + optionsCost)  / 100 * 30)}<br />
+                Скидка: ${order["Скидка"] = true}
                 `;
                 console.log(order);
         }
@@ -56,10 +55,8 @@ export function calculate() {
 
             if (flag) {
                 orderBox.innerHTML = `
-                "Размер картины": ${order["Размер картины"]}<br />
-                "Материал картины": ${order["Материал картины"]}<br />
-                "Дополнительные услуги": ${order["Дополнительные услуги"]}<br />
-                "Стоимость": ${order["Стоимость"]}
+                Стоимость: ${order["Стоимость"]} <br />
+                Скидка: ${order["Скидка"]}
                 `;
             } else {
                orderBox.innerHTML = "Для расчета нужно выбрать размер картины и материал картины"; 
@@ -67,6 +64,38 @@ export function calculate() {
 
 
         });
+    });
+
+
+    form.addEventListener("submit", () => {
+        const formData = new FormData(form);
+        const json = JSON.stringify( Object.fromEntries( formData.entries() ) );
+
+        if (flagInput) {
+            postDataFormToServerJSON("http://localhost:3000/fastOrder", json)
+            .then(result => {
+                result.json();
+            })
+            .then(result => {
+                console.log(result);
+            })
+            .catch()
+            .finally(() => {
+                orderBox.innerHTML = "Для расчета нужно выбрать размер картины и материал картины";
+                sizeCost = 0,
+                materialCost = 0,
+                optionsCost = 0;
+                order = {
+                    "Размер картины": "Выберите размер картины",
+                    "Материал картины": "Выберите материал картины",
+                    "Дополнительные услуги": "",
+                    "Стоимость" : 0,
+                    "Скидка": false,
+                };
+            });
+        }
+        
+        
     });
 
 
@@ -81,6 +110,7 @@ export function calculate() {
     function checkSale() {
         if (saleInput.value === "IWANTPOPART") {
             order["Стоимость"] = (sizeCost + materialCost + optionsCost) -( (sizeCost + materialCost + optionsCost)  / 100 * 30);
+            order["Скидка"] = true;
         } else {
             order["Стоимость"] = (sizeCost + materialCost + optionsCost);
         }

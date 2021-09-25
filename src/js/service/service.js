@@ -48,6 +48,19 @@ export const postDataFormToServer = async function (url, target) {
     return await result;
 };
 
+export const postDataFormToServerJSON = async function (url, target) {
+
+    const result = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: target
+    });
+
+    return await result;
+};
+
 export const getElements = async function (url) {
 
     const result = await fetch(url);
