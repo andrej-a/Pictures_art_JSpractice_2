@@ -68,15 +68,12 @@ export function calculate() {
 
 
     form.addEventListener("submit", () => {
-        const formData = new FormData(form);
-        const json = JSON.stringify( Object.fromEntries( formData.entries() ) );
+        const json = JSON.stringify( order );
 
         if (flagInput) {
             postDataFormToServerJSON("http://localhost:3000/fastOrder", json)
             .then(result => {
                 result.json();
-            })
-            .then(result => {
                 console.log(result);
             })
             .catch()

@@ -5,7 +5,8 @@ import {mask} from "./module/mask";
 import {easyGetElements} from "./module/easyGetElements";
 import {getElementsFromServer} from "./module/server";
 import {calculate} from "./module/calculate";
-
+import {tabs} from "./module/tabs";
+import {getPictureHover} from "./module/hover";
 modalWindow( //buttonDesign
     {
         buttonOpenSelectorItem: ".button-design",
@@ -67,3 +68,7 @@ mask("[name='phone']");
 getElementsFromServer(".button-styles", ".styles .container .row");
 
 calculate();
+
+tabs();
+
+getPictureHover(".sizes-block");
