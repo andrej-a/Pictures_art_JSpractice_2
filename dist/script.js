@@ -4185,6 +4185,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_calculate__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./module/calculate */ "./src/js/module/calculate.js");
 /* harmony import */ var _module_tabs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./module/tabs */ "./src/js/module/tabs.js");
 /* harmony import */ var _module_hover__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./module/hover */ "./src/js/module/hover.js");
+/* harmony import */ var _module_accordeon__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./module/accordeon */ "./src/js/module/accordeon.js");
+
 
 
 
@@ -4242,6 +4244,63 @@ Object(_module_server__WEBPACK_IMPORTED_MODULE_5__["getElementsFromServer"])(".b
 Object(_module_calculate__WEBPACK_IMPORTED_MODULE_6__["calculate"])();
 Object(_module_tabs__WEBPACK_IMPORTED_MODULE_7__["tabs"])();
 Object(_module_hover__WEBPACK_IMPORTED_MODULE_8__["getPictureHover"])(".sizes-block");
+Object(_module_accordeon__WEBPACK_IMPORTED_MODULE_9__["accordeon"])(".accordion-heading", ".accordion-block");
+
+/***/ }),
+
+/***/ "./src/js/module/accordeon.js":
+/*!************************************!*\
+  !*** ./src/js/module/accordeon.js ***!
+  \************************************/
+/*! exports provided: accordeon */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "accordeon", function() { return accordeon; });
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+
+
+
+function accordeon(trigger, collapsElement) {
+  var titles = document.querySelectorAll(trigger);
+  var content = document.querySelectorAll(collapsElement);
+  hideAllContent();
+  toggleContent();
+
+  function hideAllContent() {
+    content.forEach(function (div) {
+      div.style.display = "none";
+    });
+  }
+
+  function toggleContent() {
+    titles.forEach(function (title, i) {
+      title.addEventListener("click", function () {
+        if (this.nextElementSibling.style.display === "none") {
+          //если кликаем на закрытый
+          hideAllContent(); //то все прячем
+
+          titles.forEach(function (title) {
+            //всем заголовкам стандартный стиль
+            title.firstElementChild.style.cssText = "\n                        color: #333;\n                        border-bottom: 2px dotted #333;\n                        ";
+          });
+          this.firstElementChild.style.cssText = "\n                    color: #e950d7;\n                    border-bottom: 0px;\n                    "; //на таргет стиль активности
+
+          this.nextElementSibling.classList.add("animated", "fadeInDown"); //открываем div с индексом i
+
+          this.nextElementSibling.style.display = "";
+        } else {
+          //если кликаем на уже открытый
+          this.firstElementChild.style.cssText = "\n                    color: #333;\n                    border-bottom: 2px dotted #333;\n                    "; //то убираем стиль активности
+
+          this.nextElementSibling.style.display = "none"; //закрываем div
+        }
+      });
+    });
+  }
+} //accordeon
 
 /***/ }),
 

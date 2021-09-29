@@ -7,6 +7,7 @@ import {getElementsFromServer} from "./module/server";
 import {calculate} from "./module/calculate";
 import {tabs} from "./module/tabs";
 import {getPictureHover} from "./module/hover";
+import {accordeon} from "./module/accordeon";
 modalWindow( //buttonDesign
     {
         buttonOpenSelectorItem: ".button-design",
@@ -72,3 +73,5 @@ calculate();
 tabs();
 
 getPictureHover(".sizes-block");
+
+accordeon(".accordion-heading", ".accordion-block");
