@@ -8,6 +8,7 @@ import {calculate} from "./module/calculate";
 import {tabs} from "./module/tabs";
 import {getPictureHover} from "./module/hover";
 import {accordeon} from "./module/accordeon";
+import {burger} from "./module/burgermenu";
 modalWindow( //buttonDesign
     {
         buttonOpenSelectorItem: ".button-design",
@@ -75,3 +76,5 @@ tabs();
 getPictureHover(".sizes-block");
 
 accordeon(".accordion-heading", ".accordion-block");
+
+burger(".burger", ".burger-menu", );

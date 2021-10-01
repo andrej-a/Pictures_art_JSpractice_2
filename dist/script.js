@@ -4186,6 +4186,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_tabs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./module/tabs */ "./src/js/module/tabs.js");
 /* harmony import */ var _module_hover__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./module/hover */ "./src/js/module/hover.js");
 /* harmony import */ var _module_accordeon__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./module/accordeon */ "./src/js/module/accordeon.js");
+/* harmony import */ var _module_burgermenu__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./module/burgermenu */ "./src/js/module/burgermenu.js");
+
 
 
 
@@ -4245,6 +4247,7 @@ Object(_module_calculate__WEBPACK_IMPORTED_MODULE_6__["calculate"])();
 Object(_module_tabs__WEBPACK_IMPORTED_MODULE_7__["tabs"])();
 Object(_module_hover__WEBPACK_IMPORTED_MODULE_8__["getPictureHover"])(".sizes-block");
 Object(_module_accordeon__WEBPACK_IMPORTED_MODULE_9__["accordeon"])(".accordion-heading", ".accordion-block");
+Object(_module_burgermenu__WEBPACK_IMPORTED_MODULE_10__["burger"])(".burger", ".burger-menu");
 
 /***/ }),
 
@@ -4301,6 +4304,38 @@ function accordeon(trigger, collapsElement) {
     });
   }
 } //accordeon
+
+/***/ }),
+
+/***/ "./src/js/module/burgermenu.js":
+/*!*************************************!*\
+  !*** ./src/js/module/burgermenu.js ***!
+  \*************************************/
+/*! exports provided: burger */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "burger", function() { return burger; });
+
+
+function burger(triger, menuSelector) {
+  var burgerBTN = document.querySelector(triger);
+  var menuList = document.querySelector(menuSelector);
+  menuList.style.display = "none";
+  burgerBTN.addEventListener("click", function () {
+    if (menuList.style.display === "none" && window.screen.availWidth < 993) {
+      menuList.style.display = "block";
+    } else {
+      menuList.style.display = "none";
+    }
+  });
+  window.addEventListener("resize", function () {
+    if (menuList.style.display === "block" && window.screen.availWidth > 992) {
+      menuList.style.display = "none";
+    }
+  });
+} //burger
 
 /***/ }),
 
