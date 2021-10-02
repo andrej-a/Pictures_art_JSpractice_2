@@ -4,30 +4,23 @@ export function getPictureHover(selector) {
     const parentBlocks = document.querySelectorAll(selector);
 
     parentBlocks.forEach((block) => {
+        const img = block.querySelector("img");
+
         block.addEventListener("mouseover", () => {
-            showIMG(block);
+            toggleIMG(block, `${img.src.slice(0,-4)}-1.png`, img);
         });
 
         block.addEventListener("mouseout", () => {
-            hideIMG(block);
+            toggleIMG(block, `${img.src.slice(0,-6)}.png`, img);
         });
     });
 
-    function showIMG(block) {
-        const img = block.querySelector("img");
-        img.src = img.src.slice(0,-4) + "-1.png";
+    function toggleIMG(block, srcValue, img) {
+        img.src = srcValue;
 
         block.querySelectorAll("p:not(.sizes-hit)").forEach(p => {
-            p.style.display = "none";
+            p.style.display === "none" ? p.style.display = "" : p.style.display = "none";
         });
     }
 
-    function hideIMG(block) {
-        const img = block.querySelector("img");
-        img.src = img.src.slice(0,-6) + ".png";
-
-        block.querySelectorAll("p:not(.sizes-hit)").forEach(p => {
-            p.style.display = "";
-        });
-    }
 }//getPictureHover

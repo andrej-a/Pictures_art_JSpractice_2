@@ -2,12 +2,14 @@
 
 export function tabs() {
 const tabsArray = document.querySelectorAll(".portfolio-menu > li");
+
 const portfolioWrapper = document.querySelector('.portfolio-wrapper');
 const blocksAll = portfolioWrapper.querySelectorAll('.all');
+
 const no = document.querySelector('.portfolio-no');
 
 tabsArray.forEach((item, i) => {
-    item.addEventListener("click", (event) => {
+    item.addEventListener("click", () => {
         filter(portfolioWrapper.querySelectorAll(`.${item.classList[0]}`));
         setActiveClass(tabsArray, i);
     });
@@ -28,7 +30,7 @@ function filter(blocks) {
             block.classList.add('animated', 'fadeIn');
         });
     }
-    if (blocks.length == 0) {
+    if (blocks.length === 0) {
         no.style.display = 'block';
         no.classList.add('animated', 'fadeIn');
     }

@@ -71,6 +71,19 @@ h4 {
   margin: 0 auto;
   font-family: 'Circe Bold', sans-serif;
 }
+.pageup {
+  opacity: 0;
+width: 26px ;
+height: 26px;
+position: fixed;
+bottom: 100px;
+right: 5%;
+z-index: 30;
+background-color: #fff;
+cursor: pointer;
+border: 1px solid white;
+  transition: 1s all;
+}
 .button-transparent {
   background-color: transparent;
   font-size: 1.5rem;
@@ -1258,6 +1271,7 @@ h4 {
   transform: translateX(-50%) !important;
   padding: 3rem 6rem 4rem 6rem;
 }
+
 @media (max-width: 1399px) {
   .paints {
     display: none;

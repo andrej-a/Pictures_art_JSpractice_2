@@ -9,6 +9,8 @@ import {tabs} from "./module/tabs";
 import {getPictureHover} from "./module/hover";
 import {accordeon} from "./module/accordeon";
 import {burger} from "./module/burgermenu";
+import {smoothScroll} from "./module/smoothScroll";
+
 modalWindow( //buttonDesign
     {
         buttonOpenSelectorItem: ".button-design",
@@ -78,3 +80,5 @@ getPictureHover(".sizes-block");
 accordeon(".accordion-heading", ".accordion-block");
 
 burger(".burger", ".burger-menu", );
+
+smoothScroll(".pageup", );
