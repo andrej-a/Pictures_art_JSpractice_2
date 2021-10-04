@@ -66,7 +66,7 @@ export function calculate() {
     form.addEventListener("submit", () => {
         const json = JSON.stringify( order );
 
-        if (flagInput) {
+        if (flagInput || form.querySelector("[name='upload']").files[0]) {
             postDataFormToServerJSON("http://localhost:3000/fastOrder", json)
             .then(result => {
                 result.json();
@@ -116,4 +116,5 @@ export function calculate() {
         
         console.log(order);
     }
+
 }//calculate

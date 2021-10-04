@@ -48,7 +48,6 @@ upload.forEach((item, i) => {
 function postDate(form) {
     form.addEventListener("submit", (event) => {
         event.preventDefault();
-
         const message = document.createElement("div");
         message.style.fontSize = "20px";
         form.parentElement.appendChild(message);
@@ -61,16 +60,11 @@ function postDate(form) {
 
         form.style.display = "none";
 
-        try {
-            uploadName[count].innerText = "Файл не выбран";
-        } catch (e) {
-
-        }
-
         let api;
         form.closest(".popup-design") || form.classList.contains("set-picture") ? api = path.designer : api = path.question;
 
-            if (api === path.designer && !flagInput) {
+            if (api === path.designer && !form.querySelector("[name='upload']").files[0]) {
+                
                 message.innerText = "Пожалуйста, загрузите файл для картины.";
 
                 setTimeout(() => {
@@ -103,6 +97,7 @@ function postDate(form) {
                             message.remove();
                             form.style.display = "";
                             form.reset();
+                            form.querySelector("[name='upload']").previousElementSibling.innerText = "Файл не выбран";
                             if (form.classList.contains("toclose") && form.classList.contains("design")) {
                                 closeModal(document.querySelector(".popup-design"));
                             } else if (form.classList.contains("toclose") && form.classList.contains("question")) {

@@ -10,6 +10,7 @@ import {getPictureHover} from "./module/hover";
 import {accordeon} from "./module/accordeon";
 import {burger} from "./module/burgermenu";
 import {smoothScroll} from "./module/smoothScroll";
+import {drop} from "./module/drag&drop";
 
 modalWindow( //buttonDesign
     {
@@ -81,4 +82,6 @@ accordeon(".accordion-heading", ".accordion-block");
 
 burger(".burger", ".burger-menu", );
 
-smoothScroll(".pageup", );
+smoothScroll(".pageup", "#up a");
+
+drop();

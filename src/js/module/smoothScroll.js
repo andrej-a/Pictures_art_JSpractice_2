@@ -1,8 +1,8 @@
 "use strict";
 
-export function smoothScroll(upSelector) {
+export function smoothScroll(upSelector, linksSelector) {
     const upElem = document.querySelector(upSelector);//up Button
-    const links = document.querySelectorAll("#up a");
+    const links = document.querySelectorAll(linksSelector);
 
     window.addEventListener("scroll", () => {
         if (document.documentElement.scrollTop > 1650) {
@@ -13,8 +13,8 @@ export function smoothScroll(upSelector) {
             upElem.classList.remove("fadeIn");
         }
     });
-
-    const element = document.documentElement,
+    //JS scrolling
+    /*const element = document.documentElement,
           body = document.body;
 
     const calcScroll = (elem) => {
@@ -67,7 +67,43 @@ export function smoothScroll(upSelector) {
         }; 
     };
     calcScroll(upElem);
+
     links.forEach(link => {
         calcScroll(link);
+    });*/
+
+    //requestAnimationFrame
+    let hrefLinks = document.querySelectorAll(`[href^="#"]`); //получаем ссылки по атрибутам (все что начинается с #)
+    let speed = 0.3;
+
+    hrefLinks.forEach(link => {
+        if (link.getAttribute("href") != "#") {//если ссылка не фальшивая
+            link.addEventListener("click", function (event) {
+                event.preventDefault();
+
+                let widthTop = document.documentElement.scrollTop, //расстояние от верха
+                    hash = this.hash, //хэш кликнутой ссылки
+                    toBlock = document.querySelector(hash).getBoundingClientRect().top, //верх элемента к которому скроллим
+                    start = null;
+
+                requestAnimationFrame(step);
+
+                function step(time) {
+                    if (start === null) {
+                        start = time;
+                    }
+                    let progress = time - start,
+                        r = (toBlock < 0 ? Math.max(widthTop - progress / speed, widthTop + toBlock) : Math.min(widthTop + progress / speed, widthTop + toBlock));
+                          //если листаем вверх toBlock отрицат.        //высота - сколько пролистали / скорость
+                    document.documentElement.scrollTo(0, r);
+
+                    if (r !== widthTop + toBlock) {
+                        requestAnimationFrame(step);
+                    } else {
+                        location.hash = hash;
+                    }
+                }
+            });
+        }
     });
 } //scroll

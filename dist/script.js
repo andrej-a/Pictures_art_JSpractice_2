@@ -3234,6 +3234,62 @@ $({ target: 'String', proto: true, forced: forcedStringHTMLMethod('link') }, {
 
 /***/ }),
 
+/***/ "./node_modules/core-js/modules/es.string.match.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.string.match.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var fixRegExpWellKnownSymbolLogic = __webpack_require__(/*! ../internals/fix-regexp-well-known-symbol-logic */ "./node_modules/core-js/internals/fix-regexp-well-known-symbol-logic.js");
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+var toLength = __webpack_require__(/*! ../internals/to-length */ "./node_modules/core-js/internals/to-length.js");
+var requireObjectCoercible = __webpack_require__(/*! ../internals/require-object-coercible */ "./node_modules/core-js/internals/require-object-coercible.js");
+var advanceStringIndex = __webpack_require__(/*! ../internals/advance-string-index */ "./node_modules/core-js/internals/advance-string-index.js");
+var regExpExec = __webpack_require__(/*! ../internals/regexp-exec-abstract */ "./node_modules/core-js/internals/regexp-exec-abstract.js");
+
+// @@match logic
+fixRegExpWellKnownSymbolLogic('match', 1, function (MATCH, nativeMatch, maybeCallNative) {
+  return [
+    // `String.prototype.match` method
+    // https://tc39.github.io/ecma262/#sec-string.prototype.match
+    function match(regexp) {
+      var O = requireObjectCoercible(this);
+      var matcher = regexp == undefined ? undefined : regexp[MATCH];
+      return matcher !== undefined ? matcher.call(regexp, O) : new RegExp(regexp)[MATCH](String(O));
+    },
+    // `RegExp.prototype[@@match]` method
+    // https://tc39.github.io/ecma262/#sec-regexp.prototype-@@match
+    function (regexp) {
+      var res = maybeCallNative(nativeMatch, regexp, this);
+      if (res.done) return res.value;
+
+      var rx = anObject(regexp);
+      var S = String(this);
+
+      if (!rx.global) return regExpExec(rx, S);
+
+      var fullUnicode = rx.unicode;
+      rx.lastIndex = 0;
+      var A = [];
+      var n = 0;
+      var result;
+      while ((result = regExpExec(rx, S)) !== null) {
+        var matchStr = String(result[0]);
+        A[n] = matchStr;
+        if (matchStr === '') rx.lastIndex = advanceStringIndex(S, toLength(rx.lastIndex), fullUnicode);
+        n++;
+      }
+      return n === 0 ? null : A;
+    }
+  ];
+});
+
+
+/***/ }),
+
 /***/ "./node_modules/core-js/modules/es.string.replace.js":
 /*!***********************************************************!*\
   !*** ./node_modules/core-js/modules/es.string.replace.js ***!
@@ -4188,6 +4244,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_accordeon__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./module/accordeon */ "./src/js/module/accordeon.js");
 /* harmony import */ var _module_burgermenu__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./module/burgermenu */ "./src/js/module/burgermenu.js");
 /* harmony import */ var _module_smoothScroll__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./module/smoothScroll */ "./src/js/module/smoothScroll.js");
+/* harmony import */ var _module_drag_drop__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./module/drag&drop */ "./src/js/module/drag&drop.js");
+
 
 
 
@@ -4250,7 +4308,8 @@ Object(_module_tabs__WEBPACK_IMPORTED_MODULE_7__["tabs"])();
 Object(_module_hover__WEBPACK_IMPORTED_MODULE_8__["getPictureHover"])(".sizes-block");
 Object(_module_accordeon__WEBPACK_IMPORTED_MODULE_9__["accordeon"])(".accordion-heading", ".accordion-block");
 Object(_module_burgermenu__WEBPACK_IMPORTED_MODULE_10__["burger"])(".burger", ".burger-menu");
-Object(_module_smoothScroll__WEBPACK_IMPORTED_MODULE_11__["smoothScroll"])(".pageup");
+Object(_module_smoothScroll__WEBPACK_IMPORTED_MODULE_11__["smoothScroll"])(".pageup", "#up a");
+Object(_module_drag_drop__WEBPACK_IMPORTED_MODULE_12__["drop"])();
 
 /***/ }),
 
@@ -4433,7 +4492,7 @@ function calculate() {
   form.addEventListener("submit", function () {
     var json = JSON.stringify(order);
 
-    if (_form__WEBPACK_IMPORTED_MODULE_6__["flagInput"]) {
+    if (_form__WEBPACK_IMPORTED_MODULE_6__["flagInput"] || form.querySelector("[name='upload']").files[0]) {
       Object(_service_service__WEBPACK_IMPORTED_MODULE_5__["postDataFormToServerJSON"])("http://localhost:3000/fastOrder", json).then(function (result) {
         result.json();
         console.log(result);
@@ -4476,6 +4535,101 @@ function calculate() {
     console.log(order);
   }
 } //calculate
+
+/***/ }),
+
+/***/ "./src/js/module/drag&drop.js":
+/*!************************************!*\
+  !*** ./src/js/module/drag&drop.js ***!
+  \************************************/
+/*! exports provided: drop */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "drop", function() { return drop; });
+/* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.array.concat */ "./node_modules/core-js/modules/es.array.concat.js");
+/* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_array_slice__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.array.slice */ "./node_modules/core-js/modules/es.array.slice.js");
+/* harmony import */ var core_js_modules_es_array_slice__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_slice__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.function.name */ "./node_modules/core-js/modules/es.function.name.js");
+/* harmony import */ var core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_string_match__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.string.match */ "./node_modules/core-js/modules/es.string.match.js");
+/* harmony import */ var core_js_modules_es_string_match__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_match__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! core-js/modules/es.string.replace */ "./node_modules/core-js/modules/es.string.replace.js");
+/* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_5__);
+
+
+
+
+
+
+
+
+function drop() {
+  var fileInputs = document.querySelectorAll("[name='upload']");
+  ["dragenter", "dragleave", "dragover", "drop"].forEach(function (eventName) {
+    fileInputs.forEach(function (input) {
+      input.addEventListener(eventName, preventDefaults, false);
+    });
+  });
+
+  function preventDefaults(event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  function highLight(elem) {
+    elem.closest(".file_upload").style.border = "5px solid yellow";
+    elem.closest(".file_upload").style.backgroundColor = "rgba(0,0,0, .7)";
+  }
+
+  function unHighLight(elem) {
+    elem.closest(".file_upload").style.border = "none";
+
+    if (elem.closest(".calc")) {
+      elem.closest(".file_upload").style.backgroundColor = "#fff";
+    } else {
+      elem.closest(".file_upload").style.backgroundColor = "#ededed";
+    }
+  }
+
+  ["dragenter", "dragover"].forEach(function (eventName) {
+    fileInputs.forEach(function (input) {
+      input.addEventListener(eventName, function () {
+        return highLight(input);
+      }, false);
+    });
+  });
+  ["dragleave", "drop"].forEach(function (eventName) {
+    fileInputs.forEach(function (input) {
+      input.addEventListener(eventName, function () {
+        return unHighLight(input);
+      }, false);
+    });
+  });
+  fileInputs.forEach(function (input, i) {
+    input.addEventListener("drop", function (event) {
+      console.log(event.dataTransfer.files[0].type.match(/image\/(jpeg|png)/gi));
+
+      if (event.dataTransfer.files[0].type.match(/image\/(jpeg|png)/gi)) {
+        input.files = event.dataTransfer.files;
+
+        if (input.files[0].name.length > 7) {
+          input.previousElementSibling.innerText = "".concat(input.files[0].name.slice(0, 7), "... ").concat(input.files[0].type.replace(/.+\//gi, "\."));
+        } else {
+          input.previousElementSibling.innerText = "".concat(input.files[0].name, " ").concat(input.files[0].type.replace(/.+\//gi, "\."));
+        }
+      } else {
+        input.previousElementSibling.innerText = "Файл не выбран";
+        input.files[0] = undefined;
+        console.log(input.files);
+      }
+    });
+  });
+} //d&d
 
 /***/ }),
 
@@ -4599,15 +4753,10 @@ function forms() {
       form.parentElement.appendChild(message);
       form.parentElement.style.cssText = "\n            display: flex;\n            justify-content: center;\n            align-items: center;\n        ";
       form.style.display = "none";
-
-      try {
-        uploadName[count].innerText = "Файл не выбран";
-      } catch (e) {}
-
       var api;
       form.closest(".popup-design") || form.classList.contains("set-picture") ? api = path.designer : api = path.question;
 
-      if (api === path.designer && !flagInput) {
+      if (api === path.designer && !form.querySelector("[name='upload']").files[0]) {
         message.innerText = "Пожалуйста, загрузите файл для картины.";
         setTimeout(function () {
           message.remove();
@@ -4634,6 +4783,7 @@ function forms() {
             message.remove();
             form.style.display = "";
             form.reset();
+            form.querySelector("[name='upload']").previousElementSibling.innerText = "Файл не выбран";
 
             if (form.classList.contains("toclose") && form.classList.contains("design")) {
               Object(_service_service__WEBPACK_IMPORTED_MODULE_8__["closeModal"])(document.querySelector(".popup-design"));
@@ -5103,18 +5253,15 @@ function slider(_ref) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "smoothScroll", function() { return smoothScroll; });
-/* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.string.replace */ "./node_modules/core-js/modules/es.string.replace.js");
-/* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
-/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
 
 
 
-
-function smoothScroll(upSelector) {
+function smoothScroll(upSelector, linksSelector) {
   var upElem = document.querySelector(upSelector); //up Button
 
-  var links = document.querySelectorAll("#up a");
+  var links = document.querySelectorAll(linksSelector);
   window.addEventListener("scroll", function () {
     if (document.documentElement.scrollTop > 1650) {
       upElem.classList.add("animated", "fadeIn");
@@ -5123,61 +5270,95 @@ function smoothScroll(upSelector) {
       upElem.classList.add("fadeOut");
       upElem.classList.remove("fadeIn");
     }
-  });
-  var element = document.documentElement,
-      body = document.body;
+  }); //JS scrolling
 
-  var calcScroll = function calcScroll(elem) {
-    elem.addEventListener("click", function (event) {
-      var scrollTop = Math.round(body.scrollTop || element.scrollTop); //расстояние от верха
-
-      if (this.hash !== "") {
-        //hash - хэш ссылки
-        event.preventDefault();
-        var hashElement = document.querySelector(this.hash),
-            //элемент к которому листаем
-        hashElementTop = 0; //оставшееся к нему расстояние
-
-        while (hashElement.offsetParent) {
-          hashElementTop += hashElement.offsetTop; //сколько пикселей до верхней гр. родит. элемен
-
-          hashElement = hashElement.offsetParent;
-        }
-
-        hashElementTop = Math.round(hashElementTop);
-        doScroll(scrollTop, hashElementTop, this.hash);
-      }
-    });
-
-    var doScroll = function doScroll(from, to, hash) {
-      var timeInterval = 1,
-          prevScrollTop,
-          speed;
-
-      if (to > from) {
-        speed = 30;
-      } else {
-        speed = -30;
-      }
-
-      var move = setInterval(function () {
-        var scrollTop = Math.round(body.scrollTop || element.scrollTop);
-
-        if (prevScrollTop === scrollTop || to > from && scrollTop >= to || to < from && scrollTop <= to) {
-          clearInterval(move);
-          history.replaceState(history.state, document.title, location.href.replace(/#.*$/g, "") + hash);
-        } else {
-          body.scrollTop += speed;
-          element.scrollTop += speed;
-          prevScrollTop = scrollTop;
-        }
-      }, timeInterval);
-    };
+  /*const element = document.documentElement,
+        body = document.body;
+    const calcScroll = (elem) => {
+      elem.addEventListener("click", function(event) {
+          let scrollTop = Math.round(body.scrollTop || element.scrollTop);//расстояние от верха
+            if(this.hash !== "") {//hash - хэш ссылки
+              event.preventDefault();
+              let hashElement = document.querySelector(this.hash),//элемент к которому листаем
+                  hashElementTop = 0;//оставшееся к нему расстояние
+              
+              while (hashElement.offsetParent) {
+                  hashElementTop += hashElement.offsetTop;//сколько пикселей до верхней гр. родит. элемен
+                  hashElement = hashElement.offsetParent;
+              }
+              
+              hashElementTop = Math.round(hashElementTop);
+                doScroll(scrollTop, hashElementTop, this.hash);
+          }
+      });
+        const doScroll = (from, to, hash) => {
+          let timeInterval = 1,
+              prevScrollTop,
+              speed;
+          
+          if (to > from) {
+              speed = 30;
+          } else {
+              speed = -30;
+          }
+            let move = setInterval(function() {
+              let scrollTop = Math.round(body.scrollTop || element.scrollTop);
+                if (
+                  prevScrollTop === scrollTop ||
+                  (to > from && scrollTop >= to) ||
+                  (to < from && scrollTop <= to)
+              ) {
+                  clearInterval(move);
+                  history.replaceState(history.state, document.title, location.href.replace(/#.*$/g, "") + hash);
+              } else {
+                  body.scrollTop += speed;
+                  element.scrollTop += speed;
+                  prevScrollTop = scrollTop;
+              }
+          }, timeInterval);
+      }; 
   };
-
   calcScroll(upElem);
-  links.forEach(function (link) {
-    calcScroll(link);
+    links.forEach(link => {
+      calcScroll(link);
+  });*/
+  //requestAnimationFrame
+
+  var hrefLinks = document.querySelectorAll("[href^=\"#\"]"); //получаем ссылки по атрибутам (все что начинается с #)
+
+  var speed = 0.3;
+  hrefLinks.forEach(function (link) {
+    if (link.getAttribute("href") != "#") {
+      //если ссылка не фальшивая
+      link.addEventListener("click", function (event) {
+        event.preventDefault();
+        var widthTop = document.documentElement.scrollTop,
+            //расстояние от верха
+        hash = this.hash,
+            //хэш кликнутой ссылки
+        toBlock = document.querySelector(hash).getBoundingClientRect().top,
+            //верх элемента к которому скроллим
+        start = null;
+        requestAnimationFrame(step);
+
+        function step(time) {
+          if (start === null) {
+            start = time;
+          }
+
+          var progress = time - start,
+              r = toBlock < 0 ? Math.max(widthTop - progress / speed, widthTop + toBlock) : Math.min(widthTop + progress / speed, widthTop + toBlock); //если листаем вверх toBlock отрицат.        //высота - сколько пролистали / скорость
+
+          document.documentElement.scrollTo(0, r);
+
+          if (r !== widthTop + toBlock) {
+            requestAnimationFrame(step);
+          } else {
+            location.hash = hash;
+          }
+        }
+      });
+    }
   });
 } //scroll
 
