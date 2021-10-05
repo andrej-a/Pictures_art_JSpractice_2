@@ -37,12 +37,12 @@ modalWindow( //gift
     }
 );
 
-//showModalByTime(".popup-consultation", 60000);
+showModalByTime(".popup-consultation", 60000);
 
-//slider(".main-slider > div > img", "vertical");    variants from class with .classes
-//slider(".feedback-slider-item", "", ".main-prev-btn", ".main-next-btn");
+slider(".main-slider > div > div > img", "vertical");    
+slider(".feedback-slider-item", "", ".main-prev-btn", ".main-next-btn");
 
-slider({
+/*slider({
     parentWrapper: ".main-slider",
     wrapper: ".main-slider-wrapper",
     slides: ".main-slider-wrapper > div > img",
@@ -62,7 +62,7 @@ slider({
     directions: "horizontal",
     prev: ".main-prev-btn",
     next: ".main-next-btn",
-});
+});*/
 
 forms();
 

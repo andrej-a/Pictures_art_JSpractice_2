@@ -4275,30 +4275,32 @@ Object(_module_modal__WEBPACK_IMPORTED_MODULE_0__["modalWindow"])( //gift
   buttonOpenSelectorItem: ".fixed-gift",
   modalSelectorItem: ".popup-gift",
   buttonCloseSelectorItem: ".popup-close"
-}); //showModalByTime(".popup-consultation", 60000);
-//slider(".main-slider > div > img", "vertical");    variants from class with .classes
-//slider(".feedback-slider-item", "", ".main-prev-btn", ".main-next-btn");
+});
+Object(_module_modal__WEBPACK_IMPORTED_MODULE_0__["showModalByTime"])(".popup-consultation", 60000);
+Object(_module_slider__WEBPACK_IMPORTED_MODULE_1__["slider"])(".main-slider > div > div > img", "vertical");
+Object(_module_slider__WEBPACK_IMPORTED_MODULE_1__["slider"])(".feedback-slider-item", "", ".main-prev-btn", ".main-next-btn");
+/*slider({
+    parentWrapper: ".main-slider",
+    wrapper: ".main-slider-wrapper",
+    slides: ".main-slider-wrapper > div > img",
+    sizeItem: "height",
+    size: "669px",
+    flexDir: "column",
+    directions: "vertical"
+});
 
-Object(_module_slider__WEBPACK_IMPORTED_MODULE_1__["slider"])({
-  parentWrapper: ".main-slider",
-  wrapper: ".main-slider-wrapper",
-  slides: ".main-slider-wrapper > div > img",
-  sizeItem: "height",
-  size: "669px",
-  flexDir: "column",
-  directions: "vertical"
-});
-Object(_module_slider__WEBPACK_IMPORTED_MODULE_1__["slider"])({
-  parentWrapper: ".feedback-slider",
-  wrapper: ".feedback-wrapper",
-  slides: ".feedback-wrapper > div",
-  sizeItem: "width",
-  size: "1141px",
-  flexDir: "row",
-  directions: "horizontal",
-  prev: ".main-prev-btn",
-  next: ".main-next-btn"
-});
+slider({
+    parentWrapper: ".feedback-slider",
+    wrapper: ".feedback-wrapper",
+    slides: ".feedback-wrapper > div",
+    sizeItem: "width",
+    size: `1141px`,
+    flexDir: "row",
+    directions: "horizontal",
+    prev: ".main-prev-btn",
+    next: ".main-next-btn",
+});*/
+
 Object(_module_form__WEBPACK_IMPORTED_MODULE_2__["forms"])();
 Object(_module_mask__WEBPACK_IMPORTED_MODULE_3__["mask"])("[name='phone']"); //easyGetElements(".button-styles", ".hidden-lg");
 
@@ -4625,7 +4627,6 @@ function drop() {
       } else {
         input.previousElementSibling.innerText = "Файл не выбран";
         input.files[0] = undefined;
-        console.log(input.files);
       }
     });
   });
@@ -5081,164 +5082,161 @@ function getElementsFromServer(trigger, parentSelector) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "slider", function() { return slider; });
-/* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.string.replace */ "./node_modules/core-js/modules/es.string.replace.js");
-/* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
-/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
 
+/*export function slider({parentWrapper, wrapper, slides, sizeItem, size, flexDir, directions, prev, next}) {
 
+const parent = document.querySelector(parentWrapper); //the most main div with elements
+const innerWrapper = document.querySelector(wrapper);   //wrapper of elements
+const slidersArray = document.querySelectorAll(slides); //just elements like img or etc
 
-
-function slider(_ref) {
-  var parentWrapper = _ref.parentWrapper,
-      wrapper = _ref.wrapper,
-      slides = _ref.slides,
-      sizeItem = _ref.sizeItem,
-      size = _ref.size,
-      flexDir = _ref.flexDir,
-      directions = _ref.directions,
-      prev = _ref.prev,
-      next = _ref.next;
-
-  /*let index = 1;    //вариант из урока с классами
-    let paused;
-  const items = document.querySelectorAll(slides);
-  
-    showSlides(index);
-  activateAnimation();
-  
-  try {
-      const prevBtn = document.querySelector(prev);
-      const nextBtn = document.querySelector(next);
-        prevBtn.addEventListener("click", () => {
-          changeSlide(-1);
-          items[index - 1].classList.remove("slideInLeft");
-          items[index - 1].classList.add("slideInRight");
-      });
-        nextBtn.addEventListener("click", () => {
-          changeSlide(1);
-          items[index - 1].classList.remove("slideInRight");
-          items[index - 1].classList.add("slideInLeft");
-      });
-      } catch(e){
-      
-  }
-    items[0].parentNode.addEventListener("mouseenter", () => {
-      clearInterval(paused);
-  });
-  items[0].parentNode.addEventListener("mouseleave", () => {
-      activateAnimation();
-  });
-  
-  function activateAnimation() {
-      if (directions === "vertical") {
-          paused = setInterval(() => {
-              changeSlide(1);
-              items[index - 1].classList.add("slideInDown");
-          }, 6000);
-      } else {
-          paused = setInterval(() => {
-              changeSlide(1);
-              items[index - 1].classList.remove("slideInRight");
-              items[index - 1].classList.add("slideInLeft");
-          }, 6000);
-      }
-  }
-  
-  function showSlides(n) {
-      if (n > items.length) {
-          index = 1;
-      }
-        if (n < 1) {
-          index = items.length;
-      }
-        items.forEach(item => {
-          item.classList.add("animated");
-          item.style.display = "none";
-      });
-        items[index - 1].style.display = "block";
-  }
-    function changeSlide(n) {
-      showSlides(index += n);
-  }
-  */
-  var parent = document.querySelector(parentWrapper); //the most main div with elements
-
-  var innerWrapper = document.querySelector(wrapper); //wrapper of elements
-
-  var slidersArray = document.querySelectorAll(slides); //just elements like img or etc
-
-  slidersArray.forEach(function (img) {
+slidersArray.forEach(img => {
     img.style[sizeItem] = size; //sizeItem === height or width
-  }); //do all of them same size
+}); //do all of them same size
+const parametres = +(slidersArray[0].style[sizeItem]).replace(/\D/gi, ""); //get width or height from slides elements
+parent.style[sizeItem] = `${parametres}px`;//set height or width of the parent 
 
-  var parametres = +slidersArray[0].style[sizeItem].replace(/\D/gi, ""); //get width or height from slides elements
+let offset = 0;
+let changeSlides = null;
 
-  parent.style[sizeItem] = "".concat(parametres, "px"); //set height or width of the parent 
+innerWrapper.style[sizeItem] = `${100 * slidersArray.length}%`;
+innerWrapper.style.display = "flex";
+innerWrapper.style.flexDirection = flexDir;
+innerWrapper.style.transition = "all .5s";
 
-  var offset = 0;
-  var changeSlides = null;
-  innerWrapper.style[sizeItem] = "".concat(100 * slidersArray.length, "%");
-  innerWrapper.style.display = "flex";
-  innerWrapper.style.flexDirection = flexDir;
-  innerWrapper.style.transition = "all .5s";
-  parent.style.overflow = "hidden";
-  activeAnimation();
+parent.style.overflow = "hidden";
+activeAnimation();
+
+try {
+    const prevBtn = document.querySelector(prev);
+    const nextBtn = document.querySelector(next);
+
+    prevBtn.addEventListener("click", () => {
+        if (offset === 0) {
+            offset = parametres * (slidersArray.length - 1);
+        } else {
+            offset -= parametres;
+        }
+        innerWrapper.style.transform = `translateX(-${offset}px)`;
+    });
+
+    nextBtn.addEventListener("click", () => {
+        if (offset === parametres * (slidersArray.length - 1)) {
+            offset = 0;
+        } else {
+            offset += parametres;
+        }
+        innerWrapper.style.transform = `translateX(-${offset}px)`;
+    });
+
+
+} catch(e){
+    
+}
+
+function activeAnimation() {
+    if (directions === "vertical") {
+        changeSlides = setInterval(() => {
+
+            if (offset === parametres * (slidersArray.length - 1)) {
+                offset = 0;
+            } else {
+                offset += parametres;
+            }
+            innerWrapper.style.transform = `translateY(-${offset}px)`;
+
+        }, 5000);
+    } else {
+        parent.style.height = "450px";
+        changeSlides = setInterval(() => {
+
+            if (offset === parametres * (slidersArray.length - 1)) {
+                offset = 0;
+            } else {
+                offset += parametres;
+            }
+            innerWrapper.style.transform = `translateX(-${offset}px)`;
+
+        }, 5000);
+    }
+
+}
+
+parent.addEventListener("mouseenter", () => {
+    clearInterval(changeSlides);
+});
+parent.addEventListener("mouseleave", () => {
+    activeAnimation();
+});
+
+}//slider*/
+
+
+function slider(slides, directions, prev, next) {
+  var index = 1; //вариант из урока с классами
+
+  var paused;
+  var items = document.querySelectorAll(slides);
+  showSlides(index);
+  activateAnimation();
 
   try {
     var prevBtn = document.querySelector(prev);
     var nextBtn = document.querySelector(next);
     prevBtn.addEventListener("click", function () {
-      if (offset === 0) {
-        offset = parametres * (slidersArray.length - 1);
-      } else {
-        offset -= parametres;
-      }
-
-      innerWrapper.style.transform = "translateX(-".concat(offset, "px)");
+      changeSlide(-1);
+      items[index - 1].classList.remove("slideInLeft");
+      items[index - 1].classList.add("slideInRight");
     });
     nextBtn.addEventListener("click", function () {
-      if (offset === parametres * (slidersArray.length - 1)) {
-        offset = 0;
-      } else {
-        offset += parametres;
-      }
-
-      innerWrapper.style.transform = "translateX(-".concat(offset, "px)");
+      changeSlide(1);
+      items[index - 1].classList.remove("slideInRight");
+      items[index - 1].classList.add("slideInLeft");
     });
   } catch (e) {}
 
-  function activeAnimation() {
+  items[0].parentNode.addEventListener("mouseenter", function () {
+    clearInterval(paused);
+  });
+  items[0].parentNode.addEventListener("mouseleave", function () {
+    activateAnimation();
+  });
+
+  function activateAnimation() {
     if (directions === "vertical") {
-      changeSlides = setInterval(function () {
-        if (offset === parametres * (slidersArray.length - 1)) {
-          offset = 0;
-        } else {
-          offset += parametres;
-        }
-
-        innerWrapper.style.transform = "translateY(-".concat(offset, "px)");
-      }, 5000);
+      paused = setInterval(function () {
+        changeSlide(1);
+        items[index - 1].classList.add("slideInDown");
+      }, 6000);
     } else {
-      parent.style.height = "450px";
-      changeSlides = setInterval(function () {
-        if (offset === parametres * (slidersArray.length - 1)) {
-          offset = 0;
-        } else {
-          offset += parametres;
-        }
-
-        innerWrapper.style.transform = "translateX(-".concat(offset, "px)");
-      }, 5000);
+      paused = setInterval(function () {
+        changeSlide(1);
+        items[index - 1].classList.remove("slideInRight");
+        items[index - 1].classList.add("slideInLeft");
+      }, 6000);
     }
   }
 
-  parent.addEventListener("mouseenter", function () {
-    clearInterval(changeSlides);
-  });
-  parent.addEventListener("mouseleave", function () {
-    activeAnimation();
-  });
+  function showSlides(n) {
+    if (n > items.length) {
+      index = 1;
+    }
+
+    if (n < 1) {
+      index = items.length;
+    }
+
+    items.forEach(function (item) {
+      item.classList.add("animated");
+      item.style.display = "none";
+    });
+    items[index - 1].style.display = "block";
+  }
+
+  function changeSlide(n) {
+    showSlides(index += n);
+  }
 } //slider
 
 /***/ }),
