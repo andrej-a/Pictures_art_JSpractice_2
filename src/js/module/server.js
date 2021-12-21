@@ -6,7 +6,7 @@ export function getElementsFromServer(trigger, parentSelector) {
     let parent = document.querySelector(parentSelector);
     
     button.addEventListener("click", () => {
-        getElements("http://localhost:3000/styles")
+        getElements("http://localhost:4000/styles")
         .then(result => {
             for (let i = 0; i < result.length; i++) {
                 let {src, title, link} = result[i];
@@ -14,7 +14,7 @@ export function getElementsFromServer(trigger, parentSelector) {
             }
             button.style.display = "none";
         })
-        .catch(e => console.log(e));
+        .catch(e => console.log(e + "ERROR"));
     });
 
 

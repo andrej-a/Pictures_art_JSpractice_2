@@ -109,9 +109,7 @@ export function calculate() {
 
         if (flag) {
             orderBox.innerHTML = `
-                Стоимость: ${order["Стоимость"] }<br />
-                Скидка: ${order["Скидка"]}
-                `;
+                Стоимость: ${order["Стоимость"]}`;
         }
         
         console.log(order);

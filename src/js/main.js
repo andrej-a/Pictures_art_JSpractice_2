@@ -68,7 +68,7 @@ forms();
 
 mask("[name='phone']");
 
-//easyGetElements(".button-styles", ".hidden-lg");
+easyGetElements(".button-styles", ".hidden-lg");
 
 getElementsFromServer(".button-styles", ".styles .container .row");
 

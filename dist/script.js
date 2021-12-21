@@ -4302,8 +4302,8 @@ slider({
 });*/
 
 Object(_module_form__WEBPACK_IMPORTED_MODULE_2__["forms"])();
-Object(_module_mask__WEBPACK_IMPORTED_MODULE_3__["mask"])("[name='phone']"); //easyGetElements(".button-styles", ".hidden-lg");
-
+Object(_module_mask__WEBPACK_IMPORTED_MODULE_3__["mask"])("[name='phone']");
+Object(_module_easyGetElements__WEBPACK_IMPORTED_MODULE_4__["easyGetElements"])(".button-styles", ".hidden-lg");
 Object(_module_server__WEBPACK_IMPORTED_MODULE_5__["getElementsFromServer"])(".button-styles", ".styles .container .row");
 Object(_module_calculate__WEBPACK_IMPORTED_MODULE_6__["calculate"])();
 Object(_module_tabs__WEBPACK_IMPORTED_MODULE_7__["tabs"])();
@@ -4413,19 +4413,16 @@ function burger(triger, menuSelector) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "calculate", function() { return calculate; });
-/* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.array.concat */ "./node_modules/core-js/modules/es.array.concat.js");
-/* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.object.to-string */ "./node_modules/core-js/modules/es.object.to-string.js");
-/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.promise */ "./node_modules/core-js/modules/es.promise.js");
-/* harmony import */ var core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var core_js_modules_es_promise_finally__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.promise.finally */ "./node_modules/core-js/modules/es.promise.finally.js");
-/* harmony import */ var core_js_modules_es_promise_finally__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise_finally__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
-/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _service_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../service/service */ "./src/js/service/service.js");
-/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./form */ "./src/js/module/form.js");
-
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.object.to-string */ "./node_modules/core-js/modules/es.object.to-string.js");
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.promise */ "./node_modules/core-js/modules/es.promise.js");
+/* harmony import */ var core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_promise_finally__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.promise.finally */ "./node_modules/core-js/modules/es.promise.finally.js");
+/* harmony import */ var core_js_modules_es_promise_finally__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise_finally__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _service_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../service/service */ "./src/js/service/service.js");
+/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./form */ "./src/js/module/form.js");
 
 
 
@@ -4494,8 +4491,8 @@ function calculate() {
   form.addEventListener("submit", function () {
     var json = JSON.stringify(order);
 
-    if (_form__WEBPACK_IMPORTED_MODULE_6__["flagInput"] || form.querySelector("[name='upload']").files[0]) {
-      Object(_service_service__WEBPACK_IMPORTED_MODULE_5__["postDataFormToServerJSON"])("http://localhost:3000/fastOrder", json).then(function (result) {
+    if (_form__WEBPACK_IMPORTED_MODULE_5__["flagInput"] || form.querySelector("[name='upload']").files[0]) {
+      Object(_service_service__WEBPACK_IMPORTED_MODULE_4__["postDataFormToServerJSON"])("http://localhost:3000/fastOrder", json).then(function (result) {
         result.json();
         console.log(result);
       }).catch().finally(function () {
@@ -4531,7 +4528,7 @@ function calculate() {
     }
 
     if (flag) {
-      orderBox.innerHTML = "\n                \u0421\u0442\u043E\u0438\u043C\u043E\u0441\u0442\u044C: ".concat(order["Стоимость"], "<br />\n                \u0421\u043A\u0438\u0434\u043A\u0430: ").concat(order["Скидка"], "\n                ");
+      orderBox.innerHTML = "\n                \u0421\u0442\u043E\u0438\u043C\u043E\u0441\u0442\u044C: ".concat(order["Стоимость"]);
     }
 
     console.log(order);
@@ -5049,7 +5046,7 @@ function getElementsFromServer(trigger, parentSelector) {
   var button = document.querySelector(trigger);
   var parent = document.querySelector(parentSelector);
   button.addEventListener("click", function () {
-    Object(_service_service__WEBPACK_IMPORTED_MODULE_2__["getElements"])("http://localhost:3000/styles").then(function (result) {
+    Object(_service_service__WEBPACK_IMPORTED_MODULE_2__["getElements"])("http://localhost:4000/styles").then(function (result) {
       for (var i = 0; i < result.length; i++) {
         var _result$i = result[i],
             src = _result$i.src,
@@ -5060,7 +5057,7 @@ function getElementsFromServer(trigger, parentSelector) {
 
       button.style.display = "none";
     }).catch(function (e) {
-      return console.log(e);
+      return console.log(e + "ERROR");
     });
   });
 
