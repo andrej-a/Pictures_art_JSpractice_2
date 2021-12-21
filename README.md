@@ -27,6 +27,6 @@ Watch it here: [Картины.art](https://andrej-a.github.io/Pictures_art_JSpr
 :heavy_check_mark: creating drag&drop loading of the pictures
 
 ## Future scopes
-:x: to make this page adaptive page for mobile phones
+:x: to make this page adaptive for mobile phones
 
 
